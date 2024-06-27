@@ -7,8 +7,8 @@ def log_to_array(log_file):
     return df.values
 
 
-pors_log = "figure_emo_comp_pors.csv"
-emo_log = "figure_emo_comp_emo.csv"
+pors_log = "emo_comp_pors.csv"
+emo_log = "emo_comp_emo.csv"
 logs = [pors_log, emo_log]
 names = [['PORS Train', 'PORS Valid', 'PORS Test'],
          ['NSGA-II Train', 'NSGA-II Valid', 'NSGA-II Test']]

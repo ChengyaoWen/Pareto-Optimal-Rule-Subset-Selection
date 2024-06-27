@@ -1,7 +1,6 @@
 import os
 import logging
 import pandas as pd
-import multiprocessing
 import numpy as np
 
 from emo import nsga2
@@ -27,13 +26,13 @@ def metric2str(metric_list, digit=4):
     return "{}$\pm${}".format(mean, std)
 
 
-def experiment_5_2(stage1: str="SpectralRules",
+def ssf_comparison(stage1: str="SpectralRules",
                  max_input_size=500,
-                 output_csv="table_4.csv"):
+                 output_csv="ssf_comparison.csv"):
     """
-    run experiment_5_2 to reproduce results of table 3&4 in paper
+    run ssf_comparison to reproduce results of table 3&4 in paper
     """
-    save_path = os.path.join(MY_PATH, "../exp_result/5_2")
+    save_path = os.path.join(MY_PATH, "../exp_result/ssf_comparison")
     if not os.path.exists(save_path):
         os.makedirs(save_path)
     output_csv = os.path.join(save_path, output_csv)
@@ -61,7 +60,7 @@ def experiment_5_2(stage1: str="SpectralRules",
     datasets = ['bank', 'credit', 'default', 'fraud']
     ret_df = []
     for dataset in datasets:
-        logger.info("Run experiment_5_2 on {} dataset".format(dataset))
+        logger.info("Run ssf_comparison on {} dataset".format(dataset))
 
         exp_result = dict()
         for method in METHODS:
@@ -115,7 +114,7 @@ def experiment_5_2(stage1: str="SpectralRules",
                 exp_result[method].append(opt_hv)
 
         ret_row = [dataset]
-        logging.info("Finish experiment_5_2 on {} dataset".format(dataset))
+        logging.info("Finish ssf_comparison on {} dataset".format(dataset))
         for method in METHODS:
             hvs = exp_result[method]
             logger.info("{}: hv_mean={} hv_std={}".format(method, np.round(np.mean(hvs), 4), np.round(np.std(hvs), 4)))
@@ -131,12 +130,12 @@ def experiment_5_2(stage1: str="SpectralRules",
     return
 
 
-def experiment_5_3_1(dataset='bank',
-                     output_csv="figure_3.csv"):
+def stage1_comparison(dataset='bank',
+                      output_csv="figure_2.csv"):
     """
-    run experiment_5_3_1 to reproduce figure 3 in paper
+    run stage1_comparison to reproduce figure 2 in paper
     """
-    save_path = os.path.join(MY_PATH, "../exp_result/5_3_1")
+    save_path = os.path.join(MY_PATH, "../exp_result/stage1_evaluation")
     if not os.path.exists(save_path):
         os.makedirs(save_path)
     output_csv = os.path.join(save_path, output_csv)
@@ -212,12 +211,12 @@ def experiment_5_3_1(dataset='bank',
     return
 
 
-def experiment_5_4_2(fbetas: list=[0.1, 0.2, 0.5],
-                     output_csv="table_6.csv"):
+def case_study_fscore(fbetas: list=[0.1, 0.2, 0.5],
+                     output_csv="fscore.csv"):
     """
-    run experiment_5_4_2 to reproduce results of table 6 in paper
+    run case_study_fscore to reproduce results of table 6 in paper
     """
-    save_path = os.path.join(MY_PATH, "../exp_result/5_4_2")
+    save_path = os.path.join(MY_PATH, "../exp_result/case_fbeta")
     if not os.path.exists(save_path):
         os.makedirs(save_path)
     output_csv = os.path.join(save_path, output_csv)
@@ -235,7 +234,7 @@ def experiment_5_4_2(fbetas: list=[0.1, 0.2, 0.5],
 
     ret_df = []
     for dataset in datasets:
-        logger.info("Run experiment_5_4_2 on {} dataset".format(dataset))
+        logger.info("Run case_study_fscore on {} dataset".format(dataset))
         fscores = dict()
         for method in methods:
             fscores[method] = [[] for _ in fbetas]
@@ -296,7 +295,7 @@ def experiment_5_4_2(fbetas: list=[0.1, 0.2, 0.5],
                         log_info += " f{}_score={}".format(fbeta, np.round(fscore, 4))
                     logger.info(log_info)
 
-        logging.info("Finish experiment_5_4_2 on {} dataset".format(dataset))
+        logging.info("Finish case_study_fscore on {} dataset".format(dataset))
 
         for idx, fbeta in enumerate(fbetas):
             ret_row = [dataset, str(fbeta)]
@@ -318,12 +317,12 @@ def experiment_5_4_2(fbetas: list=[0.1, 0.2, 0.5],
     return
 
 
-def experiment_5_4_1(prec_thresholds: list=[0.3, 0.5, 0.7],
-                     output_csv="table_5.csv"):
+def case_study_crsl(prec_thresholds: list=[0.3, 0.5, 0.7],
+                    output_csv="table_5.csv"):
     """
-    run experiment_5_4_1 to reproduce results of table 5 in paper
+    run case_study_crsl to reproduce results of table 5 in paper
     """
-    save_path = os.path.join(MY_PATH, "../exp_result/5_4_1")
+    save_path = os.path.join(MY_PATH, "../exp_result/case_crsl")
     if not os.path.exists(save_path):
         os.makedirs(save_path)
     output_csv = os.path.join(save_path, output_csv)
@@ -341,7 +340,7 @@ def experiment_5_4_1(prec_thresholds: list=[0.3, 0.5, 0.7],
 
     ret_df = []
     for dataset in datasets:
-        logger.info("Run experiment_5_4_1 on {} dataset".format(dataset))
+        logger.info("Run case_study_crsl on {} dataset".format(dataset))
         recalls = dict()
         for method in methods:
             recalls[method] = [[] for _ in prec_thresholds]
@@ -420,7 +419,7 @@ def experiment_5_4_1(prec_thresholds: list=[0.3, 0.5, 0.7],
                 recalls["crsl"][idx].append(opt_recall)
                 log_info += " cons{}_recall={}".format(pt, np.round(opt_recall, 4))
             logger.info(log_info)
-        logging.info("Finish experiment_5_4_1 on {} dataset".format(dataset))
+        logging.info("Finish case_study_crsl on {} dataset".format(dataset))
 
         for idx, pt in enumerate(prec_thresholds):
             ret_row = [dataset, str(pt)]
@@ -442,10 +441,10 @@ def experiment_5_4_1(prec_thresholds: list=[0.3, 0.5, 0.7],
     return
 
 
-def experiment_5_3_2(dataset='bank',
-                     output_csv="figure_4.csv"):
+def emo_comparison(dataset='bank',
+                     output_csv="emo_comp.csv"):
     """
-    run experiment_5_3_2 to reproduce figure 4 in paper
+    run emo_comparison to reproduce figure 3 in paper
     """
     save_path = os.path.join(MY_PATH, "../exp_result/5_3_2")
     if not os.path.exists(save_path):
@@ -569,13 +568,13 @@ def experiment_5_4_2_2(dataset='bank',
     return
 
 
-def experiment_5_3_1_2(dataset='bank',
-                       max_input_size=500,
-                       output_csv='5_3_1.csv'):
+def stage1_diversity(dataset='bank',
+                         max_input_size=500,
+                         output_csv='diversity.csv'):
     """
-    run experiment_5_3_2_1 to reproduce 5.3.1 in paper
+    run stage1_diversity to reproduce 5.3.1 in paper
     """
-    save_path = os.path.join(MY_PATH, "../exp_result/5_3_1")
+    save_path = os.path.join(MY_PATH, "../exp_result/stage1_comparison")
     if not os.path.exists(save_path):
         os.makedirs(save_path)
     output_csv = os.path.join(save_path, output_csv)
@@ -594,7 +593,6 @@ def experiment_5_3_1_2(dataset='bank',
         train_df = pd.read_csv(train_csv)
         valid_df = pd.read_csv(valid_csv)
         test_df = pd.read_csv(test_csv)
-        # data_df = np.vstack([train_df, valid_df, test_df])
         data_df = train_df.append(valid_df).append(test_df)
         rule_df = pd.read_csv(rule_csv)
 
@@ -622,22 +620,16 @@ def experiment_5_3_1_2(dataset='bank',
 
 
 def run_all():
-    # Section 5.2, reproduce table_3 & table_4
-    experiment_5_2(stage1="TreeEns", max_input_size=500, output_csv="table_3.csv")
-    experiment_5_2(stage1="SpectralRules", max_input_size=500, output_csv="table_4.csv")
+    ssf_comparison(stage1="TreeEns", max_input_size=500, output_csv="table_3.csv")
+    ssf_comparison(stage1="SpectralRules", max_input_size=500, output_csv="table_4.csv")
 
-    # Section 5.3.1,  reproduce figure_3
-    experiment_5_3_1(dataset='bank', output_csv="figure_3.csv")
-    experiment_5_3_1_2(dataset='bank', max_input_size=500, output_csv='5_3_1.csv')
+    stage1_comparison(dataset='bank', output_csv="sr_vs_tree.csv")
+    stage1_diversity(dataset='bank', max_input_size=500, output_csv='diversity.csv')
 
-    # Section 5.3.2, reproduce figure_4
-    experiment_5_3_2(dataset='bank', output_csv="figure_4.csv")
+    emo_comparison(dataset='bank', output_csv="emo_comp.csv")
 
-    # Section 5.4.1, reproduce table_5
-    experiment_5_4_1(prec_thresholds=[0.3, 0.5, 0.7], output_csv="table_5.csv")
-
-    # Section 5.4.2, reproduce table_6
-    experiment_5_4_2(fbetas=[0.1, 0.2, 0.5], output_csv="table_6.csv")
+    case_study_crsl(prec_thresholds=[0.3, 0.5, 0.7], output_csv="table_5.csv")
+    case_study_fscore(fbetas=[0.1, 0.2, 0.5], output_csv="fscore.csv")
 
 
 if __name__ == "__main__":

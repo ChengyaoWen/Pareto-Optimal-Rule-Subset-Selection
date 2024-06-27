@@ -6,7 +6,7 @@ def log_to_array(log_file):
     df = pd.read_csv(log_file)
     return df.values
 
-logfile = "fbeta.csv"
+logfile = "fscore.csv"
 time_array = log_to_array(logfile)
 
 #colors = ['b','r']
@@ -32,4 +32,4 @@ plt.tick_params(axis='x', labelsize=15)
 plt.legend(loc='upper left')
 leg = plt.legend()
 leg.get_frame().set_edgecolor('black')
-plt.savefig('fbeta.pdf', bbox_inches='tight', format='pdf')
+plt.savefig('fscore.pdf', bbox_inches='tight', format='pdf')
