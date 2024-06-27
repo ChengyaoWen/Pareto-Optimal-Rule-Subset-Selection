@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 input_size = ('100','200','500','1000','2000')
-figure_df = pd.read_csv("figure_sr_vs_tree.csv")
+figure_df = pd.read_csv("sr_vs_tree.csv")
 
 hvs = dict()
 for _, row in figure_df.iterrows():
