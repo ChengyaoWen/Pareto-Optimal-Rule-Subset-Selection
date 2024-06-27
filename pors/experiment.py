@@ -27,8 +27,8 @@ def metric2str(metric_list, digit=4):
 
 
 def ssf_comparison(stage1: str="SpectralRules",
-                 max_input_size=500,
-                 output_csv="ssf_comparison.csv"):
+                   max_input_size=500,
+                   output_csv="ssf_comparison.csv"):
     """
     run ssf_comparison to reproduce results of table 3&4 in paper
     """
@@ -212,7 +212,7 @@ def stage1_comparison(dataset='bank',
 
 
 def case_study_fscore(fbetas: list=[0.1, 0.2, 0.5],
-                     output_csv="fscore.csv"):
+                      output_csv="fscore.csv"):
     """
     run case_study_fscore to reproduce results of table 6 in paper
     """
@@ -442,7 +442,7 @@ def case_study_crsl(prec_thresholds: list=[0.3, 0.5, 0.7],
 
 
 def emo_comparison(dataset='bank',
-                     output_csv="emo_comp.csv"):
+                   output_csv="emo_comp.csv"):
     """
     run emo_comparison to reproduce figure 3 in paper
     """
@@ -569,8 +569,8 @@ def experiment_5_4_2_2(dataset='bank',
 
 
 def stage1_diversity(dataset='bank',
-                         max_input_size=500,
-                         output_csv='diversity.csv'):
+                     max_input_size=500,
+                     output_csv='diversity.csv'):
     """
     run stage1_diversity to reproduce 5.3.1 in paper
     """
